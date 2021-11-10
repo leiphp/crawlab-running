@@ -13,4 +13,5 @@ class EastmoneyItem(scrapy.Item):
     # name = scrapy.Field()
     name = scrapy.Field()
     url = scrapy.Field()
+#     content = scrapy.Field()
     pass

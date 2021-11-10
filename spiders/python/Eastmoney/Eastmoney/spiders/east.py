@@ -16,4 +16,12 @@ class EastSpider(scrapy.Spider):
             items['url']=i.xpath('./a//@href').get()
 
             yield items
-        pass
+#             yield scrapy.Request(items['url'],callback=self.parse_detail,meta={"items": items})
+
+
+    # 解析详情页
+#     def parse_detail(self, response):
+#         items = response.meta["items"]
+#         # 获取详情页的内容、图片
+#         items["content"] = response.xpath('//*[@id="ContentBody"]').extract()
+#         yield items  # 对返回的数据进行处理
