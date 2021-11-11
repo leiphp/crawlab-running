@@ -2,6 +2,8 @@ package main
 
 import (
 	"colly_stock/eastmoney"
+	"colly_stock/initialize"
+	"colly_stock/services"
 	"fmt"
 	"log"
 	"strconv"
@@ -10,7 +12,7 @@ import (
 
 
 func main() {
-
+	initialize.Init()
 	var err error
 	//err = sse.GetStockListA("e:\\sseA.csv")
 	//if err != nil {
@@ -39,6 +41,17 @@ func main() {
 		v["source"]=  article.Source
 		articleList[k] = v
 
+		article.ID = v["id"]
+		article.Title = v["title"]
+		article.Url = v["url"]
+		article.CreateTime = time.Now().Unix()
+		article.Status = 0
+		id := services.InsertSensor(article)
+		fmt.Println("return id is:",id)
+
 	}
-	fmt.Println("articleList2:",articleList,len(articleList))
+	//fmt.Println("articleList2:",articleList,len(articleList))
+	time.Sleep(60*time.Second)
+
+	services.Disconnect(initialize.Client)
 }

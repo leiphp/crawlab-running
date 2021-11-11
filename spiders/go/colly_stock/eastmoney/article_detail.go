@@ -1,6 +1,7 @@
 package eastmoney
 
 import (
+	"colly_stock/datamodels"
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"github.com/gocolly/colly"
@@ -8,21 +9,8 @@ import (
 	"strings"
 )
 
-type article struct {
-	ID                  string  `json:"id"` 					//ID
-	Title          		string  `json:"title"`            	   //标题
-	Source              string  `json:"source"`                //来源
-	Content             string  `json:"content"`               //内容
-	Reward              int     `json:"reward"`                //奖励
-	ViewCount           int     `json:"view_count"`            //浏览量
-	CategoryId          int     `json:"category_id"`           //分类ID
-	Remark              string  `json:"remark"`                //备注
-	CategoryName        string  `json:"category_name"`  	   //分类名称
-	CreateTime          int64   `json:"create_time"`           //创建时间
-	CreateDate          string  `json:"create_date"`           //发布日期
-}
 
-func GetArticleDetail(url string) (detail article, err error) {
+func GetArticleDetail(url string) (detail datamodels.Article, err error) {
 	c := colly.NewCollector()
 
 	c.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36"
