@@ -51,7 +51,22 @@ func main() {
 
 	}
 	//fmt.Println("articleList2:",articleList,len(articleList))
-	time.Sleep(60*time.Second)
+	//关闭连接
+	//services.Disconnect(initialize.Client)
+	//defer func() {
+	//	err = initialize.Client.Disconnect(context.TODO())
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	fmt.Println("Connection to MongoDB closed.")
+	//}()
 
-	services.Disconnect(initialize.Client)
+	//异步MQ推送数据到线上
+	ch := make(chan int)
+	go services.PushRabbitMQ(ch)
+	ch <- 10
+	fmt.Println("发送成功")
+
+	fmt.Println("程序执行完成！")
+	//time.Sleep(60*time.Second)
 }

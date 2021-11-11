@@ -49,7 +49,7 @@ func GetArticleList(url string) (articleList []map[string]string, err error) {
 				title := htmlquery.FindOne(node, "./a/@title")
 				fmt.Println("url:",htmlquery.InnerText(url),"title:",htmlquery.InnerText(title))
 				//title := htmlquery.FindOne(node, `.//span[@class="title"]/text()`)
-				log.Println(strings.Split(htmlquery.InnerText(url), "/")[4], htmlquery.InnerText(title))
+				//log.Println(strings.Split(htmlquery.InnerText(url), "/")[4], htmlquery.InnerText(title))
 				articleMap["id"] = strings.Split(strings.Split(htmlquery.InnerText(url), "/")[4],".")[0]
 				articleMap["url"] = htmlquery.InnerText(url)
 				articleMap["title"] = htmlquery.InnerText(title)
