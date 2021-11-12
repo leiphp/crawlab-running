@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"time"
 )
@@ -47,21 +48,64 @@ func InsertFinance(record datamodels.Article) (insertID primitive.ObjectID) {
 //使用collection.FindOne()来查询单个Document记录。这个方法返回一个可以解码为值的结果。
 func queryFinance() ([]datamodels.Article,error){
 	//查询一条记录
+	//filter := bson.D{
+	//	{"status", 0},
+	//	{"id", "202111112178447978"},
+	//}
+	//
+	//var article datamodels.Article
+	//
+	//err := initialize.Collection.FindOne(context.TODO(), filter).Decode(&article)
+	//if err != nil {
+	//	fmt.Printf("查询数据报错:%s\n", err.Error())
+	//	return nil, err
+	//}
+	//fmt.Printf("Found a single document: %+v\n", article)
+	//articles := make([]datamodels.Article,0)
+	//articles = append(articles,article)
+	//return articles,nil
+
+	// 查询多个
+	// 将选项传递给Find()
+	findOptions := options.Find()
+	findOptions.SetLimit(200)
+
 	filter := bson.D{
 		{"status", 0},
-		{"id", "202111112178447978"},
 	}
 
-	var article datamodels.Article
+	// 定义一个切片用来存储查询结果
+	var results []datamodels.Article
 
-	err := initialize.Collection.FindOne(context.TODO(), filter).Decode(&article)
+	// 把bson.D{{}}作为一个filter来匹配所有文档
+	cur, err := initialize.Collection.Find(context.TODO(), filter, findOptions)
 	if err != nil {
-		fmt.Printf("%s\n", err.Error())
+		log.Fatal(err)
+		return nil, err
 	}
-	fmt.Printf("Found a single document: %+v\n", article)
-	articles := make([]datamodels.Article,0)
-	articles = append(articles,article)
-	return articles,nil
+
+	// 查找多个文档返回一个光标
+	// 遍历游标允许我们一次解码一个文档
+	for cur.Next(context.TODO()) {
+		// 创建一个值，将单个文档解码为该值
+		var elem datamodels.Article
+		err := cur.Decode(&elem)
+		if err != nil {
+			log.Fatal(err)
+			return nil, err
+		}
+		results = append(results, elem)
+	}
+
+	if err := cur.Err(); err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	// 完成后关闭游标
+	cur.Close(context.TODO())
+	fmt.Printf("Found multiple documents num: %#v\n", len(results))
+	return results,nil
 }
 
 //更新:使用collection.UpdateOne()更新单个Document记录。

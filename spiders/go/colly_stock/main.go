@@ -45,6 +45,7 @@ func main() {
 		article.Title = v["title"]
 		article.Url = v["url"]
 		article.CreateTime = time.Now().Unix()
+		article.CategoryId = 13
 		article.Status = 0
 		id := services.InsertFinance(article)
 		fmt.Println("return id is:",id)
