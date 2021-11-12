@@ -6,12 +6,14 @@ import (
 	//"go.mongodb.org/mongo-driver/bson"    //BOSN解析包
 	"go.mongodb.org/mongo-driver/mongo"    //MongoDB的Go驱动包
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/sbabiv/rmqconn"
 	"log"
 )
 
 var (
 	Client     *mongo.Client     //数据库客户端
 	Collection *mongo.Collection //客户端
+	MqClient   rmqconn.Connecter //全局Mq客户端
 )
 
 //	提供系统初始化，全局变量
@@ -46,4 +48,10 @@ func Init() {
 	//	log.Fatal(err)
 	//}
 	//fmt.Println("Connection to MongoDB closed.")
+
+	//RMQ客户端
+	MqClient, err = rmqconn.Open("amqp://guest:guest@127.0.0.1:5672", rmqconn.Dial)
+	if err != nil {
+		panic(err)
+	}
 }

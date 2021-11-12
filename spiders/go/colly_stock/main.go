@@ -46,7 +46,7 @@ func main() {
 		article.Url = v["url"]
 		article.CreateTime = time.Now().Unix()
 		article.Status = 0
-		id := services.InsertSensor(article)
+		id := services.InsertFinance(article)
 		fmt.Println("return id is:",id)
 
 	}

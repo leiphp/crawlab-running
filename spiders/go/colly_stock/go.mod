@@ -10,6 +10,8 @@ require (
 	github.com/gocolly/colly v1.2.0
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
+	github.com/sbabiv/rmqconn v1.1.0
+	github.com/streadway/amqp v1.0.0 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	go.mongodb.org/mongo-driver v1.7.4
 	golang.org/x/net v0.0.0-20211109214657-ef0fda0de508 // indirect
