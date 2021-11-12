@@ -64,7 +64,7 @@ func main() {
 	//异步MQ推送数据到线上
 	ch := make(chan int)
 	go services.PushRabbitMQ(ch)
-	ch <- 10
+	ch <- len(articleList)
 	fmt.Println("发送成功")
 
 	fmt.Println("程序执行完成！")
