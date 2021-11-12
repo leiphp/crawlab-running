@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//执行MQ处理数据
 func PushRabbitMQ(c chan int) {
 	time.Sleep(10*time.Second)
 	ret := <-c

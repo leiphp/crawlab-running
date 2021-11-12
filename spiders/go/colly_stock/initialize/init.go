@@ -11,18 +11,18 @@ import (
 
 var (
 	Client     *mongo.Client     //数据库客户端
-	Collection *mongo.Collection //redis客户端
+	Collection *mongo.Collection //客户端
 )
 
 //	提供系统初始化，全局变量
 func Init() {
-
+	var err error
 	// 设置mongoDB客户端连接信息
 	param := fmt.Sprintf("mongodb://10.250.200.223:27017")
 	clientOptions := options.Client().ApplyURI(param)
 
 	// 建立客户端连接
-	Client, err := mongo.Connect(context.TODO(), clientOptions)
+	Client, err = mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 		fmt.Println(err)

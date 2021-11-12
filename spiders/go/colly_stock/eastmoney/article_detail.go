@@ -34,10 +34,21 @@ func GetArticleDetail(url string) (detail datamodels.Article, err error) {
 		//fmt.Println("content2:",htmlquery.OutputHTML(content,true))
 		create_date := htmlquery.FindOne(doc, `//*[@id="topbox"]/div[3]/div[1]/div[1]`)
 		source := htmlquery.FindOne(doc, `//*[@id="topbox"]/div[3]/div[1]/div[2]`)
-
-		detail.Content = htmlquery.OutputHTML(content,true)
-		detail.CreateDate = htmlquery.InnerText(create_date)
-		detail.Source = htmlquery.InnerText(source)
+		if content != nil {
+			detail.Content = htmlquery.OutputHTML(content,true)
+		}else{
+			detail.Content = ""
+		}
+		if create_date != nil {
+			detail.CreateDate = htmlquery.InnerText(create_date)
+		}else{
+			detail.CreateDate = ""
+		}
+		if source != nil {
+			detail.Source = htmlquery.InnerText(source)
+		}else{
+			detail.Source = ""
+		}
 	})
 
 

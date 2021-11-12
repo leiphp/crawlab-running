@@ -52,7 +52,6 @@ func main() {
 	}
 	//fmt.Println("articleList2:",articleList,len(articleList))
 	//关闭连接
-	//services.Disconnect(initialize.Client)
 	//defer func() {
 	//	err = initialize.Client.Disconnect(context.TODO())
 	//	if err != nil {
@@ -69,4 +68,6 @@ func main() {
 
 	fmt.Println("程序执行完成！")
 	//time.Sleep(60*time.Second)
+
+	defer services.Disconnect(initialize.Client)
 }
